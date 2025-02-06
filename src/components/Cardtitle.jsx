@@ -35,7 +35,7 @@ function Cardtitle({ name, kasb, vaqt, tavsiya, holat, onClick }) {
         <div className="w-full h-0.5 bg-gray-300 mt-2 md:hidden"></div>
       </div>
 
-      <div className="flex flex-wrap space-x-2">
+      <div className="flex flex-wrap space-x-2 mb-2">
         {["Frontend", "Senior", "HTML", "CSS", "JavaScript"].map(
           (tag, index) => (
             <span
