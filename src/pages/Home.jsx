@@ -1,5 +1,6 @@
 import React from "react";
 import Cardtitle from "../components/Cardtitle";
+import { useNavigate } from "react-router-dom";
 
 const jobList = [
   {
@@ -9,7 +10,7 @@ const jobList = [
     vaqt: "1d ago • Full Time • USA only",
     tavsiya: "FEATURED",
     holat: "New!",
-    textnalogiya:""
+    textnalogiya: "",
   },
   {
     id: 2,
@@ -18,7 +19,7 @@ const jobList = [
     vaqt: "2d ago • Part Time • Remote",
     tavsiya: "FEATURED",
     holat: "New!",
-    textnalogiya:""
+    textnalogiya: "",
   },
   {
     id: 3,
@@ -27,7 +28,7 @@ const jobList = [
     vaqt: "3d ago • Freelance • Canada",
     tavsiya: "",
     holat: "New!",
-    textnalogiya:""
+    textnalogiya: "",
   },
   {
     id: 4,
@@ -36,7 +37,7 @@ const jobList = [
     vaqt: "5d ago • Contract • Canada",
     tavsiya: "",
     holat: "",
-    textnalogiya:""
+    textnalogiya: "",
   },
   {
     id: 5,
@@ -45,7 +46,7 @@ const jobList = [
     vaqt: "5d ago • Contract • Canada",
     tavsiya: "",
     holat: "",
-    textnalogiya:""
+    textnalogiya: "",
   },
   {
     id: 6,
@@ -54,7 +55,7 @@ const jobList = [
     vaqt: "5d ago • Contract • Canada",
     tavsiya: "",
     holat: "",
-    textnalogiya:""
+    textnalogiya: "",
   },
   {
     id: 7,
@@ -63,7 +64,7 @@ const jobList = [
     vaqt: "5d ago • Contract • Canada",
     tavsiya: "FEATURED",
     holat: "",
-    textnalogiya:""
+    textnalogiya: "",
   },
   {
     id: 8,
@@ -72,11 +73,13 @@ const jobList = [
     vaqt: "5d ago • Contract • Canada",
     tavsiya: "FEATURED",
     holat: "New!",
-    textnalogiya:""
+    textnalogiya: "",
   },
 ];
 
 function Home() {
+  const navigate = useNavigate();
+
   return (
     <>
       {jobList.map((job) => (
@@ -87,6 +90,7 @@ function Home() {
           vaqt={job.vaqt}
           tavsiya={job.tavsiya}
           holat={job.holat}
+          onClick={() => navigate("/about")}
         />
       ))}
     </>

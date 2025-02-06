@@ -11,13 +11,14 @@ import MainLayout from "./layout/MainLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import About from "./pages/About";
 
 //component
 import ProtectedRoutes from "./components/ProtectedRoutes";
 //actions
 
 function App() {
-  const user = true ;
+  const user = true;
   const routes = createBrowserRouter([
     {
       path: "/",
@@ -30,6 +31,10 @@ function App() {
         {
           index: true,
           element: <Home />,
+        },
+        {
+          path: "/about",
+          element: <About />,
         },
       ],
     },

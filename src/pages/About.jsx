@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
+import Cardtitle from "../components/Cardtitle";
 
 function About() {
   return (
-    <div>About</div>
-  )
+    <div>
+      <Cardtitle />
+    </div>
+  );
 }
-
-export default About
+export default About;
