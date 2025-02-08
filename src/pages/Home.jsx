@@ -1,98 +1,85 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Cardtitle from "../components/Cardtitle";
 import { useNavigate } from "react-router-dom";
 
-const jobList = [
-  {
-    id: 1,
-    name: "Photosnap",
-    kasb: "Senior Frontend Developer",
-    vaqt: "1d ago • Full Time • USA only",
-    tavsiya: "FEATURED",
-    holat: "New!",
-    textnalogiya: "",
-  },
-  {
-    id: 2,
-    name: "Manage",
-    kasb: "Fullstack Developer",
-    vaqt: "2d ago • Part Time • Remote",
-    tavsiya: "FEATURED",
-    holat: "New!",
-    textnalogiya: "",
-  },
-  {
-    id: 3,
-    name: "Account",
-    kasb: "Junior Frontend Developer",
-    vaqt: "3d ago • Freelance • Canada",
-    tavsiya: "",
-    holat: "New!",
-    textnalogiya: "",
-  },
-  {
-    id: 4,
-    name: "MyHome",
-    kasb: "Software Engineer",
-    vaqt: "5d ago • Contract • Canada",
-    tavsiya: "",
-    holat: "",
-    textnalogiya: "",
-  },
-  {
-    id: 5,
-    name: "MyHome",
-    kasb: "Junior Backend Developer",
-    vaqt: "5d ago • Contract • Canada",
-    tavsiya: "",
-    holat: "",
-    textnalogiya: "",
-  },
-  {
-    id: 6,
-    name: "MyHome",
-    kasb: "Junior Developer",
-    vaqt: "5d ago • Contract • Canada",
-    tavsiya: "",
-    holat: "",
-    textnalogiya: "",
-  },
-  {
-    id: 7,
-    name: "MyHome",
-    kasb: "Full Stack Engineer",
-    vaqt: "5d ago • Contract • Canada",
-    tavsiya: "FEATURED",
-    holat: "",
-    textnalogiya: "",
-  },
-  {
-    id: 8,
-    name: "MyHome",
-    kasb: "Front-end Dev",
-    vaqt: "5d ago • Contract • Canada",
-    tavsiya: "FEATURED",
-    holat: "New!",
-    textnalogiya: "",
-  },
-];
-
 function Home() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
+  const [filterTexn, setFilterTexn] = useState([]);
+
+  useEffect(() => {
+    fetch("https://json-api.uz/api/project/job-list/jobs")
+      .then((res) => res.json())
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((err) => console.log(err.message));
+  }, []);
+
+  const handleFilterClick = (texn) => {
+    setFilterTexn((prev) =>
+      prev.includes(texn)
+        ? prev.filter((item) => item !== texn)
+        : [...prev, texn]
+    );
+  };
+
+  const filteredProducts =
+    filterTexn.length > 0
+      ? products.filter((job) =>
+          filterTexn.every((filter) =>
+            [...job.languages, ...job.tools].includes(filter)
+          )
+        )
+      : products;
 
   return (
     <>
-      {jobList.map((job) => (
-        <Cardtitle
-          key={job.id}
-          name={job.name}
-          kasb={job.kasb}
-          vaqt={job.vaqt}
-          tavsiya={job.tavsiya}
-          holat={job.holat}
-          onClick={() => navigate("/about")}
-        />
-      ))}
+      <h1 className="text-xl font-bold mb-4">Ish o‘rinlari</h1>
+
+      <div className="flex gap-2 mb-4">
+        {["HTML", "CSS", "JavaScript", "React", "Python"].map((texn) => (
+          <button
+            key={texn}
+            className={`px-4 py-2 rounded-md ${
+              filterTexn.includes(texn)
+                ? "bg-teal-500 text-white"
+                : "bg-gray-200"
+            }`}
+            onClick={() => handleFilterClick(texn)}
+          >
+            {texn}
+          </button>
+        ))}
+
+        <button
+          className="px-4 py-2 rounded-md bg-red-500 text-white"
+          onClick={() => setFilterTexn([])}
+        >
+          Clear All
+        </button>
+      </div>
+      <ul>
+        {filteredProducts.map((data) => (
+          <Cardtitle
+            key={data.id}
+            name={data.company}
+            logo={data.logo}
+            position={data.position}
+            location={data.location}
+            postedAt={data.postedAt}
+            tavsiya={data.featured ? "FEATURED" : ""}
+            holat={data.new ? "New!" : ""}
+            texnologiyalar={[
+              data.role,
+              data.level,
+              ...data.languages,
+              ...data.tools,
+            ]}
+            // onClick={() => navigate("/about")}
+          />
+        ))}
+      </ul>
     </>
   );
 }
